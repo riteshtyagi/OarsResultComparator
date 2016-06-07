@@ -44,6 +44,7 @@
         vm.classAnimation = 'rubberBand';
       }, 4000);
     }
+    vm.marks = 0;
 
     function showToastr() {
       toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
@@ -63,26 +64,276 @@
     }
 
     function reset() {
+      vm.marks = 0;
       vm.answers = {};
     }
 
-    vm.marks = 0;
+
     function calculateMarks(){
-
+      vm.marks = 0;
       console.log("inside calculate marks")
-      calculateMarksForSingleChoice(1,5,3,-2);
-      calculateMarksForSingleChoice(14, 18, 3, 0);
-      calculateMarksForMultipleChoice();
+      calculateMarksForSingleChoice();
     }
 
-    function calculateMarksForSingleChoice(start, end, positiveMarks, negativeMarks){
+    vm.IITJeeAnswerModel = {};
 
+    var questionPattern = {
+      physics: {
+        section1: {
+          range: {
+            start: 1,
+            end: 5
+          },
+          positiveMark: 3,
+          negativeMark: -1
+        },
+        section2: {
+          range: {
+            start: 6,
+            end: 13
+          },
+          positiveMark: 4,
+          negativeMark: -2
+        },
+        section3: {
+          range: {
+            start: 14,
+            end: 18
+          },
+          positiveMark: 3,
+          negativeMark: 0
+        }
+      },
+      chemistry: {
+        section1: {
+          range: {
+            start: 37,
+            end: 41
+          },
+          positiveMark: 3,
+          negativeMark: -1
+        },
+        section2: {
+          range: {
+            start: 42,
+            end: 49
+          },
+          positiveMark: 4,
+          negativeMark: -2
+        },
+        section3: {
+          range: {
+            start: 50,
+            end: 54
+          },
+          positiveMark: 3,
+          negativeMark: 0
+        }
+      },
+      math: {
+        section1: {
+          range: {
+            start: 19,
+            end: 23
+          },
+          positiveMark: 3,
+          negativeMark: -1
+        },
+        section2: {
+          range: {
+            start: 24,
+            end: 31
+          },
+          positiveMark: 4,
+          negativeMark: -2
+        },
+        section3: {
+          range: {
+            start: 32,
+            end: 36
+          },
+          positiveMark: 3,
+          negativeMark: 0
+        }
+      }
+    };
+
+      prepareAnswerModel(questionPattern);
+
+    function prepareAnswerModel(questionPattern){
+      for(var key in questionPattern){
+        if (!questionPattern.hasOwnProperty(key)) continue;
+          for (var section in questionPattern[key]) {
+            if (!questionPattern[key].hasOwnProperty(section)) continue;
+            prepareAnswerObject(questionPattern[key][section].range.start, questionPattern[key][section].range.end, questionPattern[key][section].positiveMark, questionPattern[key][section].negativeMark)
+          }
+      }
+    }
+    function prepareAnswerObject(questionStart, questionEnd, positiveMark, negativeMark){
+      for(var i = questionStart; i <= questionEnd; i++){
+        var queNumber = "Q"+i;
+        var answer = {};
+        answer.questionNumber = queNumber;
+        answer.positiveMark = positiveMark;
+        answer.negativeMark = negativeMark;
+        vm.IITJeeAnswerModel[queNumber] = answer;
+      }
+    }
+    function calculateMarksForSingleChoice(){
+      var total = 0;
+      _.forEach(_.keys(vm.answers),function(key){
+        if(vm.answersFromIitJee[key] && !_.isEmpty(vm.answers[key])){
+          if( _.isEqual(vm.answers[key],vm.answersFromIitJee[key])  ){
+            total =total + vm.IITJeeAnswerModel[key].positiveMark;
+          }
+          else{
+            total = total+vm.IITJeeAnswerModel[key].negativeMark;
+          }
+        } else if(_.isEmpty()){
+
+        }
+
+        vm.marks = total;
+      });
     }
 
-    function calculateMarksForMultipleChoice(){
 
-    }
-
+    vm.questionFromIITJee = {
+      "Q49": {
+        "A": true,
+        "B": true
+      },
+      "Q1": "B",
+      "Q2": "D",
+      "Q3": "B",
+      "Q4": "A",
+      "Q5": "D",
+      "Q6": {
+        "A": true,
+        "B": true,
+        "D": true
+      },
+      "Q7": {
+        "A": true,
+        "B": true,
+        "C": true
+      },
+      "Q8": {
+        "A": true,
+        "C": true
+      },
+      "Q9": {
+        "A": true,
+        "D": true
+      },
+      "Q10": {
+        "B": true,
+        "D": true
+      },
+      "Q11": {
+        "A": true,
+        "D": true
+      },
+      "Q12": {
+        "A": true,
+        "B": true,
+        "D": true
+      },
+      "Q13": {
+        "A": true,
+        "C": true,
+        "D": true
+      },
+      "Q14": "8",
+      "Q15": "9",
+      "Q16": "6",
+      "Q17": "3",
+      "Q18": "8",
+      "Q19": "C",
+      "Q20": "C",
+      "Q21": "B",
+      "Q22": "B",
+      "Q23": "A",
+      "Q24": {
+        "B": true,
+        "C": true,
+        "D": true
+      },
+      "Q25": {
+        "B": true,
+        "D": true
+      },
+      "Q26": {
+        "A": true,
+        "C": true,
+        "D": true
+      },
+      "Q27": {
+        "B": true,
+        "C": true
+      },
+      "Q28": {
+        "A": true,
+        "D": true
+      },
+      "Q29": {
+        "A": true,
+        "B": true
+      },
+      "Q30": {
+        "B": true
+      },
+      "Q31": {
+        "B": true,
+        "C": true
+      },
+      "Q32": "9",
+      "Q33": "4",
+      "Q34": "3",
+      "Q35": "2",
+      "Q36": "5",
+      "Q37": "C",
+      "Q38": "A",
+      "Q39": "C",
+      "Q40": "C",
+      "Q41": "C",
+      "Q42": {
+        "B": true,
+        "C": true,
+        "D": true
+      },
+      "Q43": {
+        "A": true,
+        "C": true
+      },
+      "Q50": "2",
+      "Q51": "5",
+      "Q52": "1",
+      "Q53": "7",
+      "Q54": "1",
+      "Q44": {
+        "B": true,
+        "C": true
+      },
+      "Q45": {
+        "A": true,
+        "C": true,
+        "D": true
+      },
+      "Q46": {
+        "A": true,
+        "D": true
+      },
+      "Q47": {
+        "B": true,
+        "C": true
+      },
+      "Q48": {
+        "A": true,
+        "B": true,
+        "C": true
+      }
+    };
     vm.answersFromIitJee = {
       "Q49": {
         "A": true,
@@ -218,8 +469,6 @@
         "B": true,
         "C": true
       }
-    }
-
-    ;
+    };
   }
 })();

@@ -9,16 +9,9 @@
 
   <h3>Provide your answer key.</h3>
 
+  <h4 style = "color:red" > Marks: {{main.marks}}</h4>
   <div class="col-xs-12 col-sm-10">
   <form name = "inputForm">
-    <label>
-      First name:
-      <input type="text" name="firstname" value="" placeholder= "first name"/>
-    </label>
-    <label>
-    Last name:
-    <input type="text" name="lastname" value="" placeholder= "last name" />
-    </label>
     <br><br>
     <table>
       <thead>
@@ -69,7 +62,7 @@
           <h2>Preview</h2>
             <pre>
              Answers: {{main.answers | json}}
-              Marks: {{main.marks}}
+              <!--vm.IITJeeAnswerModel: {{main.IITJeeAnswerModel | json}}-->
             </pre>
         </td>
       </tr>
