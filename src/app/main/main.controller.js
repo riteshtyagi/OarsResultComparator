@@ -60,7 +60,7 @@
     }
     function clearRB(question)
     {
-      vm.answers[question]={};
+      delete vm.answers[question];
     }
 
     function reset() {
@@ -71,7 +71,6 @@
 
     function calculateMarks(){
       vm.marks = 0;
-      console.log("inside calculate marks")
       calculateMarksForSingleChoice();
     }
 
@@ -179,296 +178,177 @@
         vm.IITJeeAnswerModel[queNumber] = answer;
       }
     }
+
+    vm.answersFromIitJee = {
+      "Q1": "B",
+      "Q2": "D",
+      "Q3": "B",
+      "Q4": "A",
+      "Q5": "C",
+      "Q6": {
+        "A": true,
+        "B": true,
+        "D": true
+      },
+      "Q7": {
+        "A": true,
+        "B": true,
+        "C": true
+      },
+      "Q8": {
+        "A": true,
+        "C": true
+      },
+      "Q9": {
+        "A": true,
+        "D": true
+      },
+      "Q10": {
+        "B": true,
+        "D": true
+      },
+      "Q11": {
+        "A": true,
+        "D": true
+      },
+      "Q12": {
+        "A": true,
+        "B": true,
+        "D": true
+      },
+      "Q13": {
+        "A": true,
+        "C": true,
+        "D": true
+      },
+      "Q14": "8",
+      "Q15": "9",
+      "Q16": "6",
+      "Q17": "3",
+      "Q18": "8",
+      "Q19": "C",
+      "Q20": "C",
+      "Q21": "B",
+      "Q22": "B",
+      "Q23": "A",
+      "Q24": {
+        "B": true,
+        "C": true,
+        "D": true
+      },
+      "Q25": {
+        "B": true,
+        "D": true
+      },
+      "Q26": {
+        "A": true,
+        "C": true,
+        "D": true
+      },
+      "Q27": {
+        "B": true,
+        "C": true
+      },
+      "Q28": {
+        "A": true,
+        "D": true
+      },
+      "Q29": {
+        "A": true,
+        "B": true
+      },
+      "Q30": {
+        "B": true
+      },
+      "Q31": {
+        "B": true,
+        "C": true
+      },
+      "Q32": "9",
+      "Q33": "4",
+      "Q34": "3",
+      "Q35": "2",
+      "Q36": "5",
+      "Q37": "C",
+      "Q38": "A",
+      "Q39": "C",
+      "Q40": "C",
+      "Q41": "C",
+      "Q42": {
+        "B": true,
+        "C": true,
+        "D": true
+      },
+      "Q43": {
+        "A": true,
+        "C": true
+      },
+      "Q45": {
+        "A": true,
+        "C": true,
+        "D": true
+      },
+      "Q46": {
+        "A": true,
+        "C": true
+      },
+      "Q47": {
+        "B": true,
+        "C": true
+      },
+      "Q49": {
+        "A": true,
+        "C": true
+      },
+      "Q50": "2",
+      "Q51": "3",
+      "Q52": "1",
+      "Q53": "7",
+      "Q54": "1"
+    };
     function calculateMarksForSingleChoice(){
       var total = 0;
       _.forEach(_.keys(vm.answers),function(key){
         if(vm.answersFromIitJee[key] && !_.isEmpty(vm.answers[key])){
+          if(vm.questionPaper.physics.questionGroup2[key] || vm.questionPaper.chemistry.questionGroup2[key] || vm.questionPaper.math.questionGroup2[key] ){
+
+            if(vm.answersFromIitJee[key].length < vm.answer[key].length){
+              total = total + vm.IITJeeAnswerModel[key].negativeMark;
+            }
+            else if(vm.answersFromIitJee[key].length === vm.answer[key].length){
+              _.forEach(_.keys(vm.answers),function(key) {
+                if(vm.answer[key] !== vm.answersFromIitJee[key] ){
+                  total = total + vm.IITJeeAnswerModel[key].negativeMark;
+                  return false;
+
+                }
+              });
+              total = total + vm.IITJeeAnswerModel[key].positiveMark;
+            }
+            else {
+              var temp = 0;
+              _.forEach(_.keys(vm.answers),function(key) {
+                if(answer[key] !== answersFromIitJee[key] ){
+                  temp = vm.IITJeeAnswerModel[key].negativeMark;
+                  return false;
+                }
+                else {
+                  temp++
+                }
+              });
+              total = total + temp;
+            }
+          }
           if( _.isEqual(vm.answers[key],vm.answersFromIitJee[key])  ){
             total =total + vm.IITJeeAnswerModel[key].positiveMark;
           }
           else{
             total = total+vm.IITJeeAnswerModel[key].negativeMark;
           }
-        } else if(_.isEmpty()){
-
         }
-
         vm.marks = total;
       });
     }
 
-
-    vm.questionFromIITJee = {
-      "Q49": {
-        "A": true,
-        "B": true
-      },
-      "Q1": "B",
-      "Q2": "D",
-      "Q3": "B",
-      "Q4": "A",
-      "Q5": "D",
-      "Q6": {
-        "A": true,
-        "B": true,
-        "D": true
-      },
-      "Q7": {
-        "A": true,
-        "B": true,
-        "C": true
-      },
-      "Q8": {
-        "A": true,
-        "C": true
-      },
-      "Q9": {
-        "A": true,
-        "D": true
-      },
-      "Q10": {
-        "B": true,
-        "D": true
-      },
-      "Q11": {
-        "A": true,
-        "D": true
-      },
-      "Q12": {
-        "A": true,
-        "B": true,
-        "D": true
-      },
-      "Q13": {
-        "A": true,
-        "C": true,
-        "D": true
-      },
-      "Q14": "8",
-      "Q15": "9",
-      "Q16": "6",
-      "Q17": "3",
-      "Q18": "8",
-      "Q19": "C",
-      "Q20": "C",
-      "Q21": "B",
-      "Q22": "B",
-      "Q23": "A",
-      "Q24": {
-        "B": true,
-        "C": true,
-        "D": true
-      },
-      "Q25": {
-        "B": true,
-        "D": true
-      },
-      "Q26": {
-        "A": true,
-        "C": true,
-        "D": true
-      },
-      "Q27": {
-        "B": true,
-        "C": true
-      },
-      "Q28": {
-        "A": true,
-        "D": true
-      },
-      "Q29": {
-        "A": true,
-        "B": true
-      },
-      "Q30": {
-        "B": true
-      },
-      "Q31": {
-        "B": true,
-        "C": true
-      },
-      "Q32": "9",
-      "Q33": "4",
-      "Q34": "3",
-      "Q35": "2",
-      "Q36": "5",
-      "Q37": "C",
-      "Q38": "A",
-      "Q39": "C",
-      "Q40": "C",
-      "Q41": "C",
-      "Q42": {
-        "B": true,
-        "C": true,
-        "D": true
-      },
-      "Q43": {
-        "A": true,
-        "C": true
-      },
-      "Q50": "2",
-      "Q51": "5",
-      "Q52": "1",
-      "Q53": "7",
-      "Q54": "1",
-      "Q44": {
-        "B": true,
-        "C": true
-      },
-      "Q45": {
-        "A": true,
-        "C": true,
-        "D": true
-      },
-      "Q46": {
-        "A": true,
-        "D": true
-      },
-      "Q47": {
-        "B": true,
-        "C": true
-      },
-      "Q48": {
-        "A": true,
-        "B": true,
-        "C": true
-      }
-    };
-    vm.answersFromIitJee = {
-      "Q49": {
-        "A": true,
-        "C": true
-      },
-      "Q1": "B",
-      "Q2": "D",
-      "Q3": "B",
-      "Q4": "A",
-      "Q5": "D",
-      "Q6": {
-        "A": true,
-        "B": true,
-        "D": true
-      },
-      "Q7": {
-        "A": true,
-        "B": true,
-        "C": true
-      },
-      "Q8": {
-        "A": true,
-        "C": true
-      },
-      "Q9": {
-        "A": true,
-        "D": true
-      },
-      "Q10": {
-        "B": true,
-        "D": true
-      },
-      "Q11": {
-        "A": true,
-        "D": true
-      },
-      "Q12": {
-        "A": true,
-        "B": true,
-        "D": true
-      },
-      "Q13": {
-        "A": true,
-        "C": true,
-        "D": true
-      },
-      "Q14": "8",
-      "Q15": "9",
-      "Q16": "6",
-      "Q17": "3",
-      "Q18": "8",
-      "Q19": "C",
-      "Q20": "C",
-      "Q21": "B",
-      "Q22": "B",
-      "Q23": "A",
-      "Q24": {
-        "B": true,
-        "C": true,
-        "D": true
-      },
-      "Q25": {
-        "B": true,
-        "D": true
-      },
-      "Q26": {
-        "A": true,
-        "C": true,
-        "D": true
-      },
-      "Q27": {
-        "B": true,
-        "C": true
-      },
-      "Q28": {
-        "A": true,
-        "D": true
-      },
-      "Q29": {
-        "A": true,
-        "B": true
-      },
-      "Q30": {
-        "B": true
-      },
-      "Q31": {
-        "B": true,
-        "C": true
-      },
-      "Q32": "9",
-      "Q33": "4",
-      "Q34": "3",
-      "Q35": "2",
-      "Q36": "5",
-      "Q37": "C",
-      "Q38": "A",
-      "Q39": "C",
-      "Q40": "C",
-      "Q41": "C",
-      "Q42": {
-        "B": true,
-        "C": true,
-        "D": true
-      },
-      "Q43": {
-        "A": true,
-        "C": true
-      },
-      "Q50": "2",
-      "Q51": "5",
-      "Q52": "1",
-      "Q53": "7",
-      "Q54": "1",
-      "Q44": {
-        "B": true,
-        "C": true
-      },
-      "Q45": {
-        "A": true,
-        "C": true,
-        "D": true
-      },
-      "Q46": {
-        "A": true,
-        "D": true
-      },
-      "Q47": {
-        "B": true,
-        "C": true
-      },
-      "Q48": {
-        "A": true,
-        "B": true,
-        "C": true
-      }
-    };
-  }
+}
 })();
