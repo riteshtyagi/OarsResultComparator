@@ -13,7 +13,13 @@
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main'
-      });
+      })
+    .state('fillOars',{
+      url: '/fillOars/:questionPaper?language',
+      templateUrl: 'app/main/IITJeeAdvancePaper1.html',
+      controller: 'MainController',
+      controllerAs: 'main'
+    });
 
     $urlRouterProvider.otherwise('/');
   }

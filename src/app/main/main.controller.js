@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($timeout, webDevTec, toastr) {
+  function MainController($timeout, webDevTec, toastr, $state) {
     var vm = this;
 
     vm.awesomeThings = [];
@@ -35,8 +35,11 @@
     vm.clearRB = clearRB;
     vm.calculateMarks = calculateMarks;
 
+    vm.getIITJEE16Url = function(paper){
+      return $state.href('fillOars',{questionPaper:paper,language:'en'});
+    };
 
-    activate();
+
 
     function activate() {
       getWebDevTec();
