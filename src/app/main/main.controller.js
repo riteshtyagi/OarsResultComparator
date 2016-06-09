@@ -36,7 +36,10 @@
     vm.calculateMarks = calculateMarks;
 
     vm.getIITJEE16Url = function(paper){
-      return $state.href('fillOars',{questionPaper:paper,language:'en'});
+      return $state.href('paper1',{year:'2016',questionPaper:paper,language:'en'});
+    };
+    vm.getIITJEE16Paper2Url = function(paper){
+      return $state.href('paper2',{year:'2016',questionPaper:paper,language:'en'});
     };
 
 
@@ -199,8 +202,8 @@
         "C": true
       },
       "Q8": {
-        "A": true,
-        "C": true
+        "C": true,
+        "D": true
       },
       "Q9": {
         "A": true,
@@ -224,12 +227,12 @@
         "C": true,
         "D": true
       },
-      "Q14": "8",
+      "Q14": "9",
       "Q15": "9",
       "Q16": "6",
       "Q17": "3",
       "Q18": "8",
-      "Q19": "C",
+      "Q19": "D",
       "Q20": "C",
       "Q21": "B",
       "Q22": "B",
@@ -254,11 +257,12 @@
       },
       "Q28": {
         "A": true,
-        "D": true
+        "C": true
       },
       "Q29": {
         "A": true,
-        "B": true
+        "B": true,
+        "C": true
       },
       "Q30": {
         "B": true
@@ -269,8 +273,8 @@
       },
       "Q32": "9",
       "Q33": "4",
-      "Q34": "3",
-      "Q35": "2",
+      "Q34": "6",
+      "Q35": "5",
       "Q36": "5",
       "Q37": "C",
       "Q38": "A",
@@ -283,9 +287,13 @@
         "D": true
       },
       "Q43": {
-        "A": true,
+        "A": true
+      },
+      "Q44": {
+        "B": true,
         "C": true
       },
+
       "Q45": {
         "A": true,
         "C": true,
@@ -293,9 +301,14 @@
       },
       "Q46": {
         "A": true,
-        "C": true
+        "D": true
       },
       "Q47": {
+        "B": true,
+        "C": true
+      },
+      "Q48": {
+        "A": true,
         "B": true,
         "C": true
       },
@@ -304,7 +317,7 @@
         "C": true
       },
       "Q50": "2",
-      "Q51": "3",
+      "Q51": "5",
       "Q52": "1",
       "Q53": "7",
       "Q54": "1"

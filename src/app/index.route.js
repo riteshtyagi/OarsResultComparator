@@ -14,12 +14,17 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
-    .state('fillOars',{
-      url: '/fillOars/:questionPaper?language',
+    .state('paper1',{
+      url: '/:year/advance/:questionPaper?language',
       templateUrl: 'app/main/IITJeeAdvancePaper1.html',
       controller: 'MainController',
       controllerAs: 'main'
-    });
+    })
+      .state('paper2',{
+        url: '/:year/advance/:questionPaper?language',
+        templateUrl:'app/main/IITJeeAdvancePaper2.html',
+        controllerAs: 'main'
+      });
 
     $urlRouterProvider.otherwise('/');
   }
