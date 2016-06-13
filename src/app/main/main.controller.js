@@ -42,6 +42,10 @@
       return $state.href('paper2',{year:'2016',questionPaper:paper,language:'en'});
     };
 
+    vm.goTOAdminPage = function(){
+      return $state.href('admin');
+    };
+
 
 
     function activate() {
